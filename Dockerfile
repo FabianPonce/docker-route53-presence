@@ -1,8 +1,9 @@
-FROM stackbrew/ubuntu:16.04
-MAINTAINER Oliver Soell "oliver@timelinelabs.com"
+FROM alpine:3.3
+MAINTAINER Vince Tse <thelazyenginerd@gmail.com>
 
-RUN apt-get update -qq
-RUN apt-get install -y python-boto python-requests
+RUN apk update
+RUN apk upgrade
+RUN apk add py-boto py-requests
 
 ADD bin/route53-presence /bin/route53-presence
 
