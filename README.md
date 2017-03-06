@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/infrastructure-as-code/docker-route53-presence.svg?branch=master)](https://travis-ci.org/infrastructure-as-code/docker-route53-presence)
+
 # infrastructureascode/route53-presence
 
 Docker container which registers the local EC2 instance into Route53.
