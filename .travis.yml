@@ -1,0 +1,7 @@
+sudo: false
+language: python
+services:
+- "docker"
+script:
+- docker build --rm -t infrastructureascode/route53-presence .
+- docker images
