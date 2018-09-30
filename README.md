@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/infrastructure-as-code/docker-route53-presence.svg?branch=master)](https://travis-ci.org/infrastructure-as-code/docker-route53-presence)
+[![Build Status](https://travis-ci.org/fabianponce/docker-route53-presence.svg?branch=master)](https://travis-ci.org/fabianponce/docker-route53-presence)
 
-# infrastructureascode/route53-presence
+# fabianponce/route53-presence
 
 Docker container which registers the local EC2 instance into Route53.
 
-This is a fork of [timelinelabs/docker-route53-presence](https://github.com/timelinelabs/docker-route53-presence) which doesn't have a Docker Hub repo.  I have updated the script so that it can handle hostnames with 3rd-level domains (i.e. host.subdomain.example.com).  I have sent a [pull request](https://github.com/timelinelabs/docker-route53-presence/pull/1) to get the change incorporated, but decided to roll on my own given that repo hasn't been updated since March 2014.
+This is a fork of [infrastructureascode/docker-route53-presence](https://github.com/infrastructureascode/docker-route53-presence) which didn't support AWS ECS Containers. This is kind of hacky.
 
 ```
 docker run --rm infrastructureascode/route53-presence -h
@@ -19,6 +19,7 @@ optional arguments:
   -h, --help  show this help message and exit
   --ttl TTL   ttl in seconds, default 600
   --local     use local IP instead of public
+  --container get the IP of the container running in AWSVPC mode
 ```
 
 ## Example Usage

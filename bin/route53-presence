@@ -20,6 +20,11 @@ def get_zone_id(hostname):
     exit(1)
   return zone.GetHostedZoneResponse.Id.split('/')[2]
 
+def get_ip_container():
+  raw = requests.get("http://169.254.170.2/v2/metadata").content
+  parsed = json.loads(raw)
+  return parsed['Containers'][0]['Networks'][0]['IPv4Addresses'][0]
+
 def get_ip(local):
   if local:
     scope = 'local'
@@ -37,13 +42,18 @@ parser = argparse.ArgumentParser(description='Register or unregister a name in R
 parser.add_argument('hostname', help='fqdn to manipulate')
 parser.add_argument('--ttl', default=600, help='ttl in seconds, default 600')
 parser.add_argument('--local', action='store_true', help='use local IP instead of public')
+parser.add_argument('--container', action='store_true', help='use container IP (awsvpc mode).')
 
 args = parser.parse_args()
 
 conn = boto.connect_route53(os.environ.get('AWS_ACCESS_KEY'), os.environ.get('AWS_SECRET_KEY'))
 zone_id = get_zone_id(args.hostname)
 
-result = register(args.hostname, get_ip(args.local), args.ttl)
+ip = get_ip(args.local)
+if args.container:
+  ip = get_ip_container()
+
+result = register(args.hostname, ip, args.ttl)
 if not result:
   print "Error"
   exit(1)
